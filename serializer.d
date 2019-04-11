@@ -5,10 +5,9 @@ import core.stdc.stdio: FILE, fopen, fwrite, fread, fclose;
 /++
     Сериализует структуру в файл
 +/
-void serialize(T, string)(T s, string filename) 
+void serialize(T)(T s, const(char*) filename) 
 {
-    auto fn = cast(const(char*)) filename;
-    FILE* fp = fopen(fn, "wb");
+    FILE* fp = fopen(filename, "wb");
     const size_t ret = fwrite(&s, s.sizeof, 1, fp);
     fclose(fp);
     assert(ret == 1);
@@ -17,10 +16,9 @@ void serialize(T, string)(T s, string filename)
 /++
     Дисериализует строку из файла в структуру
 +/
-T deserialize(T, string)(T s, string filename)
+T deserialize(T)(T s, const(char*) filename)
 {
-    auto fn = cast(const(char*)) filename;
-    FILE* fp = fopen(fn, "rb");
+    FILE* fp = fopen(filename, "rb");
     const size_t ret = fread(&s, s.sizeof, 1, fp);
     fclose(fp);
     assert(ret == 1);
